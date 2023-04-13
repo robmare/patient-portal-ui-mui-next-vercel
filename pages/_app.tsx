@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }): JSX.Element {
         display="flex"
         justifyContent="center"
         alignItems="center">
-        <Link href="https://https://patient-portal-tan.vercel.app/api/otp" target="_blank">View OTP Code</Link>     
+        <Link href="https://patient-portal-tan.vercel.app/api/otp" target="_blank">View OTP Code</Link>     
       </Box>
       <Component {...pageProps} />
     </SuperTokensWrapper>
