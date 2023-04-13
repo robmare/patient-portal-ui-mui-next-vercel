@@ -1,8 +1,11 @@
 const fs = require('fs');
-const fsp = require('fs/promises');
+const path = require('path');
 
-export function updateJSONFile(filePath, updates) {
-    fs.readFile(filePath, 'utf8', function (err, data) {
+export function writeOtp(updates) {
+    //Find the absolute path of the json directory
+    const jsonDirectory = path.join(process.cwd(), 'json');
+  
+    fs.readFile(jsonDirectory + '/otp.json', 'utf8', function (err, data) {
         if (err) {
             console.error(err);
             return;
@@ -14,14 +17,10 @@ export function updateJSONFile(filePath, updates) {
             json[key] = updates[key];
         }
 
-        fs.writeFile(filePath, JSON.stringify(json, null, 2), 'utf8', function (err) {
+        fs.writeFile(jsonDirectory + '/otp.json', JSON.stringify(json, null, 2), 'utf8', function (err) {
             if (err) {
                 console.error(err);
             }
         });
     });
-}
-
-export function readJSONFile(filePath) {
-    return JSON.parse(fs.readFileSync(filePath, 'utf8'));
 }

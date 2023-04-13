@@ -14,7 +14,7 @@ if (typeof window !== 'undefined') {
   SuperTokensReact.init(SuperTokensConfig.frontendConfig());
 }
 
-function MyApp({ Component, pageProps }): JSX.Element {
+export default function MyApp({ Component, pageProps }): JSX.Element {
   useEffect(() => {
     async function doRefresh() {
       if (pageProps.fromSupertokens === 'needs-refresh') {
@@ -39,11 +39,16 @@ function MyApp({ Component, pageProps }): JSX.Element {
         display="flex"
         justifyContent="center"
         alignItems="center">
-        <Link href="https://patient-portal-tan.vercel.app/api/otp" target="_blank">View OTP Code</Link>     
+          <div>
+            <h1>Your OTP Code</h1>
+            <ul>
+              <li>
+                <Link href="http://localhost:3000/api/staticdata" target="_blank">View Code</Link>
+              </li>
+            </ul>
+          </div>
       </Box>
       <Component {...pageProps} />
     </SuperTokensWrapper>
   )
 }
-
-export default MyApp

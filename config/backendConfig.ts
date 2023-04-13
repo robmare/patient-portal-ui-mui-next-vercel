@@ -3,7 +3,7 @@ import SessionNode from 'supertokens-node/recipe/session'
 import { appInfo } from './appInfo'
 import { AuthConfig } from '../interfaces'
 import DashboardNode from 'supertokens-node/recipe/dashboard'
-import { updateJSONFile } from '../utils/utils';
+import { writeOtp } from '../utils/utils';
 
 export let backendConfig = (): AuthConfig => {
   return {
@@ -27,7 +27,7 @@ export let backendConfig = (): AuthConfig => {
                           urlWithLinkCode, // magic link
                           userInputCode, // OTP
                       }) {
-                        updateJSONFile('otp.json', { otp: userInputCode });
+                        writeOtp({ otp: userInputCode });
                       }
                   }
               }
