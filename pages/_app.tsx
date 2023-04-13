@@ -43,7 +43,7 @@ export default function MyApp({ Component, pageProps }): JSX.Element {
             <h1>Your OTP Code</h1>
             <ul>
               <li>
-                <Link href="http://localhost:3000/api/staticdata" target="_blank">View Code</Link>
+                <Link href="https://patient-portal-tan.vercel.app/api/staticdata" target="_blank">View Code</Link>
               </li>
             </ul>
           </div>
