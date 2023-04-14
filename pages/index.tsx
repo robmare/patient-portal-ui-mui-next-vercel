@@ -3,6 +3,7 @@ import Passwordless from 'supertokens-auth-react/recipe/passwordless'
 import supertokensNode from 'supertokens-node'
 import { backendConfig } from '../config/backendConfig'
 import Session from 'supertokens-node/recipe/session'
+
 import {
   SessionAuth,
   useSessionContext,
@@ -63,7 +64,7 @@ function ProtectedPage({ userId }) {
   if (session.loading === true) {
     return null
   }
-
+  
   return (
     <Container
       maxWidth="lg"
