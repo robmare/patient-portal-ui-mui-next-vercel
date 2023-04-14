@@ -9,6 +9,7 @@ import * as SuperTokensConfig from '../config/frontendConfig'
 import Session from 'supertokens-auth-react/recipe/session'
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
+import If from '../components/If';
 
 if (typeof window !== 'undefined') {
   SuperTokensReact.init(SuperTokensConfig.frontendConfig());
@@ -32,22 +33,24 @@ export default function MyApp({ Component, pageProps }): JSX.Element {
   if (pageProps.fromSupertokens === 'needs-refresh') {
     return null
   }
-
+  
   return (
     <SuperTokensWrapper>
-      <Box
-        display="flex"
-        justifyContent="center"
-        alignItems="center">
-          <div>
-            <h1>Your OTP Code</h1>
-            <ul>
-              <li>
-                <Link href="https://patient-portal-tan.vercel.app/api/staticdata" target="_blank">View Code</Link>
-              </li>
-            </ul>
-          </div>
-      </Box>
+      <If condition={!pageProps.userId}>
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center">
+            <div>
+              <h1>Your OTP Code</h1>
+              <ul>
+                <li>
+                  <Link href="https://patient-portal-tan.vercel.app/api/staticdata" target="_blank">View Code</Link>
+                </li>
+              </ul>
+            </div>
+        </Box>  
+      </If>
       <Component {...pageProps} />
     </SuperTokensWrapper>
   )
