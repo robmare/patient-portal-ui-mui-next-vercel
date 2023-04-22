@@ -8,6 +8,6 @@ export default async function getOtp(req, res) {
     //Return the content of the data file in json format
     res.status(200).json(JSON.parse(fileContents));
   } else {
-    res.status(200).json(JSON.parse('{ "otp": "none" }'));
+    res.status(200).json(JSON.parse('{ "error": "File not foud." }'));
   }
 }

@@ -1,15 +1,12 @@
 import '../styles/globals.css'
-import React from 'react'
-import { useEffect } from 'react'
-import SuperTokensReact, {
-  SuperTokensWrapper,
-  redirectToAuth,
-} from 'supertokens-auth-react'
+import React, { useEffect } from 'react'
+import SuperTokensReact, { SuperTokensWrapper, redirectToAuth} from 'supertokens-auth-react'
 import * as SuperTokensConfig from '../config/frontendConfig'
 import Session from 'supertokens-auth-react/recipe/session'
 import Link from '@mui/material/Link';
 import Box from '@mui/material/Box';
 import If from '../components/If';
+import Footer from '../components/Footer';
 
 if (typeof window !== 'undefined') {
   SuperTokensReact.init(SuperTokensConfig.frontendConfig());
@@ -31,7 +28,8 @@ export default function MyApp({ Component, pageProps }): JSX.Element {
   }, [pageProps.fromSupertokens]);
 
   if (pageProps.fromSupertokens === 'needs-refresh') {
-    return null
+    let returnNull: JSX.Element = React.createElement('span');
+    return returnNull;
   }
   
   return (
@@ -51,7 +49,10 @@ export default function MyApp({ Component, pageProps }): JSX.Element {
             </div>
         </Box>  
       </If>
+
       <Component {...pageProps} />
+
+      <Footer />
     </SuperTokensWrapper>
   )
 }

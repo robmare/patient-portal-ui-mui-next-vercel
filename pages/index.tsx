@@ -1,14 +1,10 @@
-import React from 'react'
-import Passwordless from 'supertokens-auth-react/recipe/passwordless'
-import supertokensNode from 'supertokens-node'
-import { backendConfig } from '../config/backendConfig'
-import Session from 'supertokens-node/recipe/session'
-
-import {
-  SessionAuth,
-  useSessionContext,
-} from 'supertokens-auth-react/recipe/session'
-import { redirectToAuth } from 'supertokens-auth-react'
+import React, { useState } from "react";
+import Passwordless from 'supertokens-auth-react/recipe/passwordless';
+import supertokensNode from 'supertokens-node';
+import { backendConfig } from '../config/backendConfig';
+import Session from 'supertokens-node/recipe/session';
+import { SessionAuth, useSessionContext } from 'supertokens-auth-react/recipe/session';
+import { redirectToAuth } from 'supertokens-auth-react';
 import { Typography, Container, Box } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import Logo from "../components/Logo";
@@ -18,6 +14,7 @@ import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DefTesttable from "../components/tables/defTesttable";
 import PatientNav from "../components/navBars/patientNav";
+
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   // this runs on the backend, so we must call init on supertokens-node SDK
@@ -208,7 +205,7 @@ function ProtectedPage({ userId }) {
 export default function Home(props: { userId: any }) {
   return (
     <SessionAuth>
-      <ProtectedPage userId={props.userId} />
+        <ProtectedPage userId={props.userId} />
     </SessionAuth>
   )
 }

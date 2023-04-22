@@ -1,8 +1,8 @@
-import Passwordless from 'supertokens-node/recipe/passwordless'
-import SessionNode from 'supertokens-node/recipe/session'
-import { appInfo } from './appInfo'
-import { AuthConfig } from '../interfaces'
-import DashboardNode from 'supertokens-node/recipe/dashboard'
+import Passwordless from 'supertokens-node/recipe/passwordless';
+import SessionNode from 'supertokens-node/recipe/session';
+import { appInfo } from './appInfo';
+import { AuthConfig } from '../interfaces';
+import DashboardNode from 'supertokens-node/recipe/dashboard';
 import { writeOtp } from '../utils/utils';
 
 export let backendConfig = (): AuthConfig => {
@@ -16,22 +16,22 @@ export let backendConfig = (): AuthConfig => {
     recipeList: [
       Passwordless.init({
         contactMethod: "PHONE",
-        flowType: "USER_INPUT_CODE_AND_MAGIC_LINK",
+        flowType: "USER_INPUT_CODE",
         smsDelivery: {
           override: (originalImplementation) => {
-                  return {
-                      ...originalImplementation,
-                      sendSms: async function ({
-                          codeLifetime, // amount of time the code is alive for (in MS)
-                          phoneNumber,
-                          urlWithLinkCode, // magic link
-                          userInputCode, // OTP
-                      }) {
-                        writeOtp({ otp: userInputCode });
-                      }
-                  }
-              }
-          },
+            return {
+                ...originalImplementation,
+                sendSms: async function ({
+                    codeLifetime, // amount of time the code is alive for (in MS)
+                    phoneNumber,
+                    urlWithLinkCode, // magic link
+                    userInputCode, // OTP
+                }) {
+                  writeOtp({ otp: userInputCode });
+                }
+            }
+          }
+        }
       }),
       SessionNode.init(),
       DashboardNode.init(),
