@@ -16,6 +16,7 @@
     "@mui/lab": "latest",
     "@mui/material": "latest",
     "@mui/x-data-grid": "latest",
+    "@vercel/analytics": "latest",
     "axios": "latest",
     "next": "latest",
     "nextjs-cors": "^2.1.2",

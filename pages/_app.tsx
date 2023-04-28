@@ -15,6 +15,7 @@ import theme from '../src/theme';
 import createEmotionCache from '../src/createEmotionCache';
 import Logo from '../components/Logo';
 import { appInfo } from '../config/appInfo';
+import { Analytics } from '@vercel/analytics/react';
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache();
@@ -78,6 +79,7 @@ export default function MyApp(props: MyAppProps): JSX.Element {
                   justifyContent: 'center',
                   textAlign: "center",
                 }} />
+              <Analytics />
             </SuperTokensWrapper>
            
             <StickyFooter />
