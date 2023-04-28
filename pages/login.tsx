@@ -3,7 +3,7 @@ import { redirectToAuth } from 'supertokens-auth-react';
 
 export default function Login() {
     async function login() {
-        redirectToAuth({ redirectBack: false });
+        redirectToAuth({ show: "signin", redirectBack: false });
     }
 
     return (

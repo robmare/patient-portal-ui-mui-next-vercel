@@ -13,8 +13,6 @@ import Iascultation from "../patient/analyses_data/input_data/Iascultation";
 import Irespiration_rate from "../patient/analyses_data/input_data/Irespiration_rate";
 import Idiuresis_vol_24h from "../patient/analyses_data/input_data/Idiuresis_vol_24h";
 
-
-
 const style = {
   position: 'absolute',
   top: '50%',

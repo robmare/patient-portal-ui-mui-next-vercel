@@ -1,10 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import IconButton from '@mui/material/IconButton';
-import AddIcon from '@mui/icons-material/Add';
 import Oname from "../patient/registry_data/output_data/Oname";
 import Oadress from "../patient/registry_data/output_data/Oadress";
 import Otemperature from "../patient/analyses_data/output_data/Otemperature";
@@ -12,13 +9,8 @@ import Oheart_rate from "../patient/analyses_data/output_data/Oheart_rate";
 import Osaturation from "../patient/analyses_data/output_data/Osaturation";
 import Otelephone from "../patient/registry_data/output_data/Otelephone";
 import Ohgt from "../patient/analyses_data/output_data/Ohgt";
-import Oascultation from "../patient/analyses_data/output_data/Oascultation";
 import Orespiration_rate from "../patient/analyses_data/output_data/Orespiration_rate";
 import Odiuresis_vol_24h from "../patient/analyses_data/output_data/Odiuresis_vol_24h";
-
-import Obowel from "../patient/analyses_data/output_data/Obowel";
-
-
 
 const style = {
   position: 'absolute',

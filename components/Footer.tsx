@@ -6,6 +6,10 @@ export default function StickyFooter() {
   return (
       <Box
         component="footer"
+        style={{
+          marginTop: "40px",
+        }}
+
         sx={{
           py: 3,
           px: 2,

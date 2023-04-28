@@ -9,13 +9,30 @@ import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl
 
 export default class PatientNavtodel extends Component {
     render() {
+        let choosen = [
+            'Itemperature',
+            'Iheart_rate',
+            'Isaturation',
+            'Ihgt',
+            'Iascultation',
+            'Irespiration_rate',
+            'Idiuresis_vol_24h'
+          ];
+        const callbackModal = () => {
+            console.log("ee");
+    
+        // if (modal.target === "choose") {
+        //   setOpen(false);
+        // }
+    
+        }
+        
         return (
-
             <Box sx={{ mt: 1, mb: 1, width: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
                         <VisualPatientDataModal />
-                        <InsertPatientDataModal />
+                        <InsertPatientDataModal callbackModal={callbackModal} chooseDef={choosen} />
                         <IconButton
                             variant="outlined"
                             size="large"
