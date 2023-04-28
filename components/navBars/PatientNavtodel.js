@@ -3,19 +3,19 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import ChooseInsertPatientDataModal from "../modals/ChooseInsertPatientDataModal";
+import InsertPatientDataModal from "../modals/InsertPatientDataModal";
 import VisualPatientDataModal from "../modals/VisualPatientDataModal";
+import FormatListNumberedRtlIcon from '@mui/icons-material/FormatListNumberedRtl';
 
-export default class patientNav extends Component {
+export default class PatientNavtodel extends Component {
     render() {
         return (
+
             <Box sx={{ mt: 1, mb: 1, width: 1 }}>
                 <AppBar position="static">
                     <Toolbar>
                         <VisualPatientDataModal />
-                        {/* <InsertPatientDataModal /> */}
-                        <ChooseInsertPatientDataModal />
+                        <InsertPatientDataModal />
                         <IconButton
                             variant="outlined"
                             size="large"
@@ -23,9 +23,9 @@ export default class patientNav extends Component {
                             color="inherit"
                             aria-label="menu"
                             sx={{ ml: 1 }}
-                            href="/PatientAgenda"
+                            href="/PatientHome"
                         >
-                            <CalendarMonthIcon color="inherit" />
+                            <FormatListNumberedRtlIcon color="inherit" />
                         </IconButton>
                         {/* </NavLink> */}
 
@@ -35,4 +35,4 @@ export default class patientNav extends Component {
             </Box>
         );
     }
-}
+};

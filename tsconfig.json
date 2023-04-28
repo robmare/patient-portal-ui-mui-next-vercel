@@ -15,8 +15,9 @@
     "isolatedModules": true,
     "noImplicitAny": false,
     "checkJs": false,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "jsxImportSource": "@emotion/react",
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "interfaces.d.ts", "pages/api/opt.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "interfaces.d.ts", "pages/api/opt.js", "pages/PatientAgenda.js"],
   "exclude": ["node_modules"]
 }

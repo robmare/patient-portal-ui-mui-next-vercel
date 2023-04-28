@@ -1,18 +1,24 @@
-export default function Footer() {
-    return (
-        <div
-            style={{
-                display: "flex",
-                width: "100%",
-                height: "80px",
-                backgroundColor: "#000000",
-                alignItems: "center",
-                justifyContent: "center",
-                alignSelf: "flex-end",
-                color: "#ffffff",
-                fontWeight: "bold",
-            }}>
-            React Demo app. Made with ❤️ using supertokens.com
-        </div>
-    );
+import Box from '@mui/material/Box';
+import Container from '@mui/material/Container';
+import Copyright from '../src/Copyright';
+
+export default function StickyFooter() {
+  return (
+      <Box
+        component="footer"
+        sx={{
+          py: 3,
+          px: 2,
+          mt: 'auto',
+          backgroundColor: (theme) =>
+            theme.palette.mode === 'light'
+              ? theme.palette.grey[200]
+              : theme.palette.grey[800],
+        }}
+      >
+        <Container maxWidth="sm">
+          <Copyright />
+        </Container>
+      </Box>
+  );
 }

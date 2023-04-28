@@ -1,10 +1,11 @@
 const apiBasePath = '/api/auth/'
+//const port = ":3000";
+//const host = "http://192.168.1.66";
+const port = "";
+const host = "https://patient-portal-tan.vercel.app";
 
-//export const websiteDomain = `https://patient-portal-tan.vercel.app/`;
-//export const apiDomain = `https://patient-portal-tan.vercel.app/`;
-
-export const websiteDomain = `http://localhost:3000/`;
-export const apiDomain = `http://localhost:3000/`;
+export const websiteDomain = `${host}${port}/`;
+export const apiDomain = `${host}${port}/`;
 
 export const appInfo = {
   appName: 'Patient Portal',
