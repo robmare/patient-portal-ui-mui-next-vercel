@@ -31,15 +31,13 @@ export default function VisualPatientDataModal() {
   const handleClose = () => setOpen(false);
   
   return (
-    <div>
+    <>
       <Button onClick={handleOpen}
         color="inherit"
-        sx={{ width: 1 }}
-      >
+        sx={{ ml: 5 }}>
         I tuoi Dati
       </Button>
       <Modal
-
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
@@ -57,6 +55,6 @@ export default function VisualPatientDataModal() {
           <Ohgt />
         </Box>
       </Modal>
-    </div>
+    </>
   );
 }

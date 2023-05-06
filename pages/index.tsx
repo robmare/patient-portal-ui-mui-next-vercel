@@ -3,6 +3,7 @@ import { backendConfig } from '../config/backendConfig';
 import Session, { SessionContainer } from 'supertokens-node/recipe/session';
 import { SessionAuth } from 'supertokens-auth-react/recipe/session';
 import ProtectedPage from './protectedPage';
+import StickyFooter from '../components/Footer';
 
 export async function getServerSideProps(context: { req: any; res: any }) {
   // this runs on the backend, so we must call init on supertokens-node SDK
@@ -36,6 +37,7 @@ export default function Home(props: { userId: any }) {
   return (
     <SessionAuth>
         <ProtectedPage userId={props.userId} />
+        <StickyFooter />
     </SessionAuth>
   )
 }

@@ -18,15 +18,18 @@
     "@mui/x-data-grid": "latest",
     "@vercel/analytics": "latest",
     "axios": "latest",
+    "country-flag-icons": "latest",
     "next": "latest",
-    "nextjs-cors": "^2.1.2",
+    "nextjs-cors": "latest",
     "react": "latest",
+    "react-device-detect": "latest",
     "react-dom": "latest",
     "supertokens-auth-react": "latest",
     "supertokens-node": "latest",
-    "supertokens-web-js": "^0.5.0",
+    "supertokens-web-js": "latest",
     "swr": "latest",
-    "twilio": "latest"
+    "twilio": "latest",
+    "universal-cookie": "latest"
   },
   "devDependencies": {
     "@types/node": "latest",

@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -16,8 +20,19 @@
     "noImplicitAny": false,
     "checkJs": false,
     "jsx": "preserve",
-    "jsxImportSource": "@emotion/react",
+    "jsxImportSource": "@emotion/react"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "interfaces.d.ts", "pages/api/opt.js", "pages/PatientAgenda.js"],
-  "exclude": ["node_modules"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "interfaces.d.ts",
+    "pages/api/opt.js",
+    "pages/PatientAgenda.js",
+    "components/navBars/MainNav.js",
+    "./src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

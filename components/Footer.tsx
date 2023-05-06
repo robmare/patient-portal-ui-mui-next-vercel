@@ -1,28 +1,23 @@
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Copyright from '../src/Copyright';
+import * as React from 'react';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export default function StickyFooter() {
-  return (
-      <Box
-        component="footer"
-        style={{
-          marginTop: "40px",
-        }}
+  const [value, setValue] = React.useState(0);
 
-        sx={{
-          py: 3,
-          px: 2,
-          mt: 'auto',
-          backgroundColor: (theme) =>
-            theme.palette.mode === 'light'
-              ? theme.palette.grey[200]
-              : theme.palette.grey[800],
-        }}
-      >
-        <Container maxWidth="sm">
-          <Copyright />
-        </Container>
-      </Box>
+  return (
+    <BottomNavigation
+      showLabels
+      value={value}
+      onChange={(event, newValue) => {
+        setValue(newValue);
+      }}>
+      <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+      <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+      <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+    </BottomNavigation>
   );
 }

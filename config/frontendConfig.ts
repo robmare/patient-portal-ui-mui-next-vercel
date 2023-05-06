@@ -6,31 +6,65 @@ import { appInfo } from './appInfo';
 import Router from 'next/router';
 import { PhoneVerifiedClaim } from '../claims/phoneVerifiedClaim';
 import axios from 'axios';
-import { redirectToAuth } from 'supertokens-auth-react';
+import translactions from '../translations/translations';
 
 export let frontendConfig = () => {
   return {
     appInfo,
     languageTranslations: {
-      translations: {
-        en: {
-            EMAIL_PASSWORD_RESET_HEADER_SUBTITLE: "We will send you an SMS to reset your password",
-            EMAIL_PASSWORD_EMAIL_LABEL: "Phone number",
-            EMAIL_PASSWORD_RESET_SEND_BTN: "Send SMS",
-            EMAIL_PASSWORD_RESET_SEND_SUCCESS: "Please check your SMS for the password recovery link. ",
-            EMAIL_PASSWORD_SIGN_IN_WRONG_CREDENTIALS_ERROR: "Incorrect phone and password combination",
-            EMAIL_PASSWORD_EMAIL_ALREADY_EXISTS: "This phone number already exists. Please sign in instead.",
-            "This email already exists. Please sign in instead.":
-                "This phone number already exists. Please sign in instead",
-        },
-      },
+      translations: translactions,
+      currentLanguageCookieScope: "patient.portal",
+      defaultLanguage: 'it'
     },
     recipeList: [
         Passwordless.init({
-            contactMethod: "PHONE",
+            contactMethod: "EMAIL_OR_PHONE",
+            style: `
+              [data-supertokens~="container"] {
+                  --palette-background: 51, 51, 51;
+                  --palette-inputBackground: 41, 41, 41;
+                  --palette-inputBorder: 41, 41, 41;
+                  --palette-textTitle: 255, 255, 255;
+                  --palette-textLabel: 255, 255, 255;
+                  --palette-textPrimary: 255, 255, 255;
+                  --palette-error: 173, 46, 46;
+                  --palette-textInput: 169, 169, 169;
+                  --palette-textLink: 169, 169, 169;
+                  --palette-superTokensBrandingBackground: 51, 51, 51;
+                  --palette-superTokensBrandingText: 51, 51, 51;
+              }
+            `,
             signInUpFeature: {
-                // this will not show the passwordless UI unless we render it ourselves.
+                defaultCountry: "EN",
                 disableDefaultUI: false,
+                emailOrPhoneFormStyle: `
+                    [data-supertokens~=button] {
+                        background-color: #555;
+                        color: inherit;
+                        border: 0px;
+                        width: 100%;
+                        margin: 0 auto;
+                    }
+
+                    [data-supertokens~=inputWrapper][data-supertokens~="inputWrapper"]:focus-within {
+                      border: 1px solid #555; 
+                      box-shadow: 0 0 0 0.2rem rgba(85, 85, 85, 0.25); 
+                    }
+                `,
+                userInputCodeFormStyle: `
+                  [data-supertokens~=button] {
+                    background-color: #555;
+                    color: inherit;
+                    border: 0px;
+                    width: 100%;
+                    margin: 0 auto;
+                  }
+
+                  [data-supertokens~=inputWrapper][data-supertokens~="inputWrapper"]:focus-within {
+                    border: 1px solid #555; 
+                    box-shadow: 0 0 0 0.2rem rgba(85, 85, 85, 0.25); 
+                  }
+                `
             },
             onHandleEvent: async (context) => {
               if (context.action === "PASSWORDLESS_CODE_SENT") {
@@ -47,7 +81,13 @@ export let frontendConfig = () => {
                   location.href = appInfo.websiteDomain;
                 }
               }
-            }
+            },
+            getRedirectionURL: async (context) => {
+              if (context.action === "SUCCESS") {
+                  return "/";
+              }
+              return undefined;
+          },
         }),
         EmailPassword.init({
           getRedirectionURL: async (context) => {
@@ -63,8 +103,8 @@ export let frontendConfig = () => {
                   formFields: [
                       {
                           id: "email",
-                          label: "Phone number",
-                          placeholder: "Phone number",
+                          label: "Email Address or Phone Number",
+                          placeholder: "Email Address or Phone NUmber",
                           validate: async (value) => {
                               // We can provide validation logic here.. but the backend
                               // checks for a valid phone number anyway

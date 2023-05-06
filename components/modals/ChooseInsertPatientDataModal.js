@@ -1,20 +1,11 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
 
-import Iarterial_pressure from "../patient/analyses_data/input_data/Iarterial_pressure";
-import Itemperature from "../patient/analyses_data/input_data/Itemperature";
-import Iheart_rate from "../patient/analyses_data/input_data/Iheart_rate";
-import Isaturation from "../patient/analyses_data/input_data/Isaturation";
-import Ihgt from "../patient/analyses_data/input_data/Ihgt";
-import Iascultation from "../patient/analyses_data/input_data/Iascultation";
-import Irespiration_rate from "../patient/analyses_data/input_data/Irespiration_rate";
-import Idiuresis_vol_24h from "../patient/analyses_data/input_data/Idiuresis_vol_24h";
 import FormGroup from '@mui/material/FormGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
@@ -143,17 +134,15 @@ export default function ChooseInsertPatientDataModal() {
   ];
   console.log(values[0].choose);
   return (
-    <div>
+    <>
 
       <IconButton onClick={handleOpen}
         variant="outlined"
         size="large"
         edge="start"
         color="inherit"
-        aria-label="menu"
-        sx={{ ml: 10 }}
-      >
-        <AddIcon color="#fff" />
+        aria-label="menu">
+        <AddIcon />
       </IconButton>
 
       <Modal
@@ -161,8 +150,8 @@ export default function ChooseInsertPatientDataModal() {
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        target="choose"
-      >
+        target="choose">
+
         <Box sx={style}>
           <Box component="span"
             display="flex"
@@ -193,6 +182,6 @@ export default function ChooseInsertPatientDataModal() {
           </Button> */}
         </Box>
       </Modal>
-    </div >
+    </>
   );
 }

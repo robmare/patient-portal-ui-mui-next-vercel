@@ -50,7 +50,7 @@ export let backendConfig = (): AuthConfig => {
     appInfo,
     recipeList: [
       Passwordless.init({
-        contactMethod: "PHONE",
+        contactMethod: "EMAIL_OR_PHONE",
         flowType: "USER_INPUT_CODE",
         smsDelivery: {
           override: (originalImplementation) => {

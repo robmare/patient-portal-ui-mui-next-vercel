@@ -1,68 +1,19 @@
 import React from "react";
-import Passwordless from 'supertokens-auth-react/recipe/passwordless';
-import { useSessionContext } from 'supertokens-auth-react/recipe/session';
-import { redirectToAuth } from 'supertokens-auth-react';
-import { Typography, Container, Box } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+import { Typography, Box } from "@mui/material";
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import PatientNav from "../components/navBars/patientNav";
 
-//////////////////////////////////////
 export default function ProtectedPage({ userId }) {
-    const theme = useTheme();
     const [expanded, setExpanded] = React.useState(false);
 
     const handleChange = (panel) => (event, isExpanded) => {
       setExpanded(isExpanded ? panel : false);
     };
-  
-    const session = useSessionContext()
-  
-    async function logoutClicked() {
-      await Passwordless.signOut()
-      redirectToAuth();
-    }
-  
-    if (session.loading === true) {
-      return null;
-    }
-    
+
     return (
       <div>
-        <PatientNav />
-  
-        <div
-          style={{
-            display: 'flex',
-            height: '70px',
-            alignItems: 'center',
-            justifyContent: 'flex-end',
-            paddingLeft: '75px',
-            paddingRight: '75px',
-          }}
-        >
-          <div
-            onClick={logoutClicked}
-            style={{
-              display: 'flex',
-              width: '116px',
-              height: '42px',
-              backgroundColor: '#000000',
-              borderRadius: '10px',
-              cursor: 'pointer',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#ffffff',
-              fontWeight: 'bold',
-            }}
-          >
-            SIGN OUT
-          </div>
-        </div>
-  
         <Box
           sx={{
             my: 4,
