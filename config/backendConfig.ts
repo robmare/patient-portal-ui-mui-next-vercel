@@ -1,21 +1,19 @@
-import Passwordless from 'supertokens-node/recipe/passwordless';
 import EmailPassword from 'supertokens-node/recipe/emailpassword';
+import Passwordless from 'supertokens-node/recipe/passwordless';
 import UserMetadata from "supertokens-node/recipe/usermetadata";
 
-import SessionNode from 'supertokens-node/recipe/session';
-import { appInfo } from './appInfo';
-import { AuthConfig } from '../interfaces';
 import DashboardNode from 'supertokens-node/recipe/dashboard';
+import SessionNode from 'supertokens-node/recipe/session';
+import { AuthConfig } from '../interfaces';
 import { writeOtp } from '../utils/utils';
-import { PhoneVerifiedClaim } from "../claims/phoneVerifiedClaim";
-import parsePhoneNumber from "libphonenumber-js/max";
+import { appInfo } from './appInfo';
 
 async function addEmailToAllowlist(email: string) {
   let existingData = await UserMetadata.getUserMetadata("emailAllowList");
   let allowList: string[] = existingData.metadata.allowList || [];
   allowList = [...allowList, email];
   await UserMetadata.updateUserMetadata("emailAllowList", {
-      allowList
+    allowList
   });
 }
 
@@ -30,7 +28,7 @@ async function addPhoneNumberToAllowlist(phoneNumber: string) {
   let allowList: string[] = existingData.metadata.allowList || [];
   allowList = [...allowList, phoneNumber];
   await UserMetadata.updateUserMetadata("phoneNumberAllowList", {
-      allowList
+    allowList
   });
 }
 
@@ -55,122 +53,122 @@ export let backendConfig = (): AuthConfig => {
         smsDelivery: {
           override: (originalImplementation) => {
             return {
-                ...originalImplementation,
-                sendSms: async function ({
-                    codeLifetime, // amount of time the code is alive for (in MS)
-                    phoneNumber,
-                    urlWithLinkCode, // magic link
-                    userInputCode, // OTP
-                }) {
-                  writeOtp({ otp: userInputCode });
-                }
+              ...originalImplementation,
+              sendSms: async function ({
+                codeLifetime, // amount of time the code is alive for (in MS)
+                phoneNumber,
+                urlWithLinkCode, // magic link
+                userInputCode, // OTP
+              }) {
+                writeOtp({ otp: userInputCode });
+              }
             }
           }
         },
         override: {
           apis: (oI) => {
-              return {
-                  ...oI,
-                  createCodePOST: async function (input) {
-                    if (oI.createCodePOST === undefined) {
-                        throw new Error("Should never come here");
-                    }
-                    
-                    if ("email" in input) {
-                      let existingUser = await Passwordless.getUserByEmail({
-                          email: input.email
-                      });
-                    
-                      if (existingUser === undefined) {
-                          let existingData = await UserMetadata.getUserMetadata("emailAllowList");
-                          let allowList: string[] = existingData.metadata.allowList || [];
-                          if (allowList.length === 0) {
-                              await addEmailToAllowlist(input.email);
-                          } else {
-                            // this is sign up attempt
-                            if (!(await isEmailAllowed(input.email))) {
-                                return {
-                                    status: "GENERAL_ERROR",
-                                    message: "Your email address is not present. Please contact the admin."
-                                }
-                            }
-                          }
-                      }
+            return {
+              ...oI,
+              createCodePOST: async function (input) {
+                if (oI.createCodePOST === undefined) {
+                  throw new Error("Should never come here");
+                }
+
+                if ("email" in input) {
+                  let existingUser = await Passwordless.getUserByEmail({
+                    email: input.email
+                  });
+
+                  if (existingUser === undefined) {
+                    let existingData = await UserMetadata.getUserMetadata("emailAllowList");
+                    let allowList: string[] = existingData.metadata.allowList || [];
+                    if (allowList.length === 0) {
+                      await addEmailToAllowlist(input.email);
                     } else {
-                        let existingUser = await Passwordless.getUserByPhoneNumber({
-                            phoneNumber: input.phoneNumber
-                        });
-                      
-                        if (existingUser === undefined) {
-                          let existingData = await UserMetadata.getUserMetadata("phoneNumberAllowList");
-                          let allowList: string[] = existingData.metadata.allowList || [];
-                          
-                          if (allowList.length === 0) {
-                            await addPhoneNumberToAllowlist(input.phoneNumber);
-                          } else {
-                            // this is sign up attempt
-                            if (!(await isPhoneNumberAllowed(input.phoneNumber))) {
-                                return {
-                                    status: "GENERAL_ERROR",
-                                    message: "Your phone number is not present. Please contact the admin."
-                                }
-                            }
-                          }
+                      // this is sign up attempt
+                      if (!(await isEmailAllowed(input.email))) {
+                        return {
+                          status: "GENERAL_ERROR",
+                          message: "Your email address is not present. Please contact the admin."
                         }
-
-                        /*                        
-                        let session = await SessionNode.getSession(input.options.req, input.options.res, {
-                          overrideGlobalClaimValidators: () => [],
-                        });
-
-                        if (session === undefined) {
-                            throw new Error("Should never come here");
-                        }
-    
-                        let phoneNumber: string = session.getAccessTokenPayload().phoneNumber;
-    
-                        if (!("phoneNumber" in input) || input.phoneNumber !== phoneNumber) {
-                            throw new Error("Should never come here");
-                        } 
-                        */
+                      }
                     }
-                    
-                    return await oI.createCodePOST!(input);
-                  },
-                  consumeCodePOST: async function (input) {
-                      if (oI.consumeCodePOST === undefined) {
-                          throw new Error("Should never come here");
-                      }
+                  }
+                } else {
+                  let existingUser = await Passwordless.getUserByPhoneNumber({
+                    phoneNumber: input.phoneNumber
+                  });
 
-                      /*
-                      // we should already have a session here since this is called
-                      // after phone password login
-                      let session = await SessionNode.getSession(input.options.req, input.options.res, {
-                          overrideGlobalClaimValidators: () => [],
-                      });
-                      
-                      if (session === undefined) {
-                          throw new Error("Should never come here");
-                      }
+                  if (existingUser === undefined) {
+                    let existingData = await UserMetadata.getUserMetadata("phoneNumberAllowList");
+                    let allowList: string[] = existingData.metadata.allowList || [];
 
-                      // we add the session to the user context so that the createNewSession
-                      // function doesn't create a new session
-                      input.userContext.session = session;
-                      */
-                      let resp = await oI.consumeCodePOST(input);
-
-                      /*
-                      if (resp.status === "OK") {
-                          // OTP verification was successful. We can now mark the
-                          // session's payload as PhoneVerifiedClaim: true so that
-                          // the user has access to API routes and the frontend UI
-                          await session.setClaimValue(PhoneVerifiedClaim, true, input.userContext);
+                    if (allowList.length === 0) {
+                      await addPhoneNumberToAllowlist(input.phoneNumber);
+                    } else {
+                      // this is sign up attempt
+                      if (!(await isPhoneNumberAllowed(input.phoneNumber))) {
+                        return {
+                          status: "GENERAL_ERROR",
+                          message: "Your phone number is not present. Please contact the admin."
+                        }
                       }
-                      */
-                     
-                      return resp;
-                  },
-              }
+                    }
+                  }
+
+                  /*                        
+                  let session = await SessionNode.getSession(input.options.req, input.options.res, {
+                    overrideGlobalClaimValidators: () => [],
+                  });
+
+                  if (session === undefined) {
+                      throw new Error("Should never come here");
+                  }
+ 
+                  let phoneNumber: string = session.getAccessTokenPayload().phoneNumber;
+ 
+                  if (!("phoneNumber" in input) || input.phoneNumber !== phoneNumber) {
+                      throw new Error("Should never come here");
+                  } 
+                  */
+                }
+
+                return await oI.createCodePOST!(input);
+              },
+              consumeCodePOST: async function (input) {
+                if (oI.consumeCodePOST === undefined) {
+                  throw new Error("Should never come here");
+                }
+
+                /*
+                // we should already have a session here since this is called
+                // after phone password login
+                let session = await SessionNode.getSession(input.options.req, input.options.res, {
+                    overrideGlobalClaimValidators: () => [],
+                });
+                
+                if (session === undefined) {
+                    throw new Error("Should never come here");
+                }
+
+                // we add the session to the user context so that the createNewSession
+                // function doesn't create a new session
+                input.userContext.session = session;
+                */
+                let resp = await oI.consumeCodePOST(input);
+
+                /*
+                if (resp.status === "OK") {
+                    // OTP verification was successful. We can now mark the
+                    // session's payload as PhoneVerifiedClaim: true so that
+                    // the user has access to API routes and the frontend UI
+                    await session.setClaimValue(PhoneVerifiedClaim, true, input.userContext);
+                }
+                */
+
+                return resp;
+              },
+            }
           }
         }
       }),
@@ -194,24 +192,24 @@ export let backendConfig = (): AuthConfig => {
           */
         },
         signUpFeature: {
-            /*
-            formFields: [
-                {
-                    id: "email",
-                    validate: async (value) => {
-                        if (typeof value !== "string") {
-                            return "Phone number is invalid";
-                        }
+          /*
+          formFields: [
+              {
+                  id: "email",
+                  validate: async (value) => {
+                      if (typeof value !== "string") {
+                          return "Phone number is invalid";
+                      }
 
-                        let parsedPhoneNumber = parsePhoneNumber(value);
-                        if (parsedPhoneNumber === undefined || !parsedPhoneNumber.isValid()) {
-                            return "Phone number is invalid";
-                        }
-                        return undefined;
-                    },
-                },
-            ],
-            */
+                      let parsedPhoneNumber = parsePhoneNumber(value);
+                      if (parsedPhoneNumber === undefined || !parsedPhoneNumber.isValid()) {
+                          return "Phone number is invalid";
+                      }
+                      return undefined;
+                  },
+              },
+          ],
+          */
         },
         override: {
           /*

@@ -18,14 +18,7 @@ export default class PatientNavtodel extends Component {
             'Irespiration_rate',
             'Idiuresis_vol_24h'
           ];
-        const callbackModal = () => {
-            console.log("ee");
-    
-        // if (modal.target === "choose") {
-        //   setOpen(false);
-        // }
-    
-        }
+        const callbackModal = () => {}
         
         return (
             <Box sx={{ mt: 1, mb: 1, width: 1 }}>
@@ -44,9 +37,6 @@ export default class PatientNavtodel extends Component {
                         >
                             <FormatListNumberedRtlIcon color="inherit" />
                         </IconButton>
-                        {/* </NavLink> */}
-
-                        {/* <Button color="inherit">Login</Button> */}
                     </Toolbar>
                 </AppBar>
             </Box>

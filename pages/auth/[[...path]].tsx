@@ -1,9 +1,7 @@
+import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import React, { useEffect } from 'react'
-import styles from '../../styles/Home.module.css'
-import dynamic from 'next/dynamic'
-import SuperTokens from 'supertokens-auth-react'
-import { redirectToAuth } from 'supertokens-auth-react'
+import SuperTokens, { redirectToAuth } from 'supertokens-auth-react'
 
 const SuperTokensComponentNoSSR = dynamic<
   React.ComponentProps<typeof SuperTokens.getRoutingComponent>
@@ -19,13 +17,13 @@ export default function Auth(): JSX.Element {
   }, [])
 
   return (
-    <div className={styles.container}>
+    <div>
       <Head>
-        <title>SuperTokens 💫</title>
+        <title>Patient Portal</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      <main>
         <SuperTokensComponentNoSSR />
       </main>
     </div>

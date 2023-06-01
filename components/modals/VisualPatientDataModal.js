@@ -1,60 +1,77 @@
-import * as React from 'react';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-import Modal from '@mui/material/Modal';
-import Oname from "../patient/registry_data/output_data/Oname";
-import Oadress from "../patient/registry_data/output_data/Oadress";
-import Otemperature from "../patient/analyses_data/output_data/Otemperature";
-import Oheart_rate from "../patient/analyses_data/output_data/Oheart_rate";
-import Osaturation from "../patient/analyses_data/output_data/Osaturation";
-import Otelephone from "../patient/registry_data/output_data/Otelephone";
-import Ohgt from "../patient/analyses_data/output_data/Ohgt";
-import Orespiration_rate from "../patient/analyses_data/output_data/Orespiration_rate";
-import Odiuresis_vol_24h from "../patient/analyses_data/output_data/Odiuresis_vol_24h";
+import Divider from '@mui/material/Divider';
+import List from '@mui/material/List';
+import Stack from '@mui/material/Stack';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
+import * as React from 'react';
+import Logout from "../common/buttons/Logout";
+import Oadress from "../utility/patient/registry_data/output_data/Oadress";
+import Oage from "../utility/patient/registry_data/output_data/Oage";
+import Oname from "../utility/patient/registry_data/output_data/Oname";
+import Osex from "../utility/patient/registry_data/output_data/Osex";
+import Otelephone from "../utility/patient/registry_data/output_data/Otelephone";
 
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  overflowY: "scroll",
-  boxShadow: 24,
-  maxHeight: "90%",
-  p: 4,
-};
 export default function VisualPatientDataModal() {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  
-  return (
-    <>
-      <Button onClick={handleOpen}
-        color="inherit"
-        sx={{ ml: 5 }}>
-        I tuoi Dati
-      </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box sx={style}>
+  const [state, setState] = React.useState({
+    top: false,
+  });
+
+  const toggleDrawer = (anchor, open) => (event) => {
+    if (
+      event &&
+      event.type === 'keydown' &&
+      (event.key === 'Tab' || event.key === 'Shift')
+    ) {
+      return;
+    }
+
+    setState({ ...state, [anchor]: open });
+  };
+
+  const list = (anchor) => (
+    <Box
+      sx={{ marginTop: "50px", maxHeight: "90%", width: anchor === 'top' || anchor === 'bottom' ? 'auto' : 250 }}
+      role="presentation"
+      onClick={toggleDrawer(anchor, false)}
+      onKeyDown={toggleDrawer(anchor, false)}
+    >
+      <List sx={{ p: 1 }}>
+        <Stack direction="row" spacing={2}>
+          <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpeg" />
           <Oname />
-          <Oadress  />
-          <Otelephone />
-          <Oheart_rate />
-          <Otemperature />
-          <Osaturation />
-          <Odiuresis_vol_24h />
-          <Orespiration_rate />
-          <Ohgt />
-        </Box>
-      </Modal>
-    </>
+        </Stack>
+        <Divider />
+        <Oage />
+        <Osex />
+        <Divider />
+        <Oadress />
+        <Otelephone />
+      </List>
+      <List sx={{ alignItems: "center", m: 1 }}>
+        <Divider />
+        <Logout />
+      </List>
+    </Box>
+  );
+  return (
+    <div>
+      {['top'].map((anchor) => (
+        <React.Fragment key={anchor}>
+          <Button startIcon={<AccountCircleIcon />} color="inherit" sx={{ width: 1, }} onClick={toggleDrawer(anchor, true)}>{anchor} Profile</Button>
+          <SwipeableDrawer
+            sx={{}}
+            anchor={anchor}
+            open={state[anchor]}
+            onClose={toggleDrawer(anchor, false)}
+            onOpen={toggleDrawer(anchor, true)}
+          >
+            {list(anchor)}
+          </SwipeableDrawer>
+        </React.Fragment>
+      ))}
+    </div>
   );
 }
