@@ -1,27 +1,22 @@
-import * as React from 'react';
-import Document, {
-  Html,
-  Head,
-  Main,
-  NextScript,
-  DocumentProps,
-  DocumentContext,
-} from 'next/document';
 import createEmotionServer from '@emotion/server/create-instance';
 import { AppType } from 'next/app';
-import theme, { roboto } from '../src/theme';
+import type { DocumentProps } from 'next/document';
+import Document, { DocumentContext, Head, Html, Main, NextScript } from 'next/document';
+import * as React from 'react';
 import createEmotionCache from '../src/createEmotionCache';
+import theme, { roboto } from '../src/theme';
 import { MyAppProps } from './_app';
 
-interface MyDocumentProps extends DocumentProps {
+type MyDocumentProps = DocumentProps & {
   emotionStyleTags: JSX.Element[];
 }
 
-export default function MyDocument({ emotionStyleTags }: MyDocumentProps) {
+export default function MyDocument({ __NEXT_DATA__, emotionStyleTags }: MyDocumentProps) {
+  const currentLocale = __NEXT_DATA__.locale;
+
   return (
-    <Html lang="en" className={roboto.className}>
+    <Html lang={currentLocale} className={roboto.className}>
       <Head>
-        {/* PWA primary color */}
         <meta name="theme-color" content={theme.palette.primary.main} />
         <meta name="emotion-insertion-point" content="" />
         <link rel="shortcut icon" href="/favicon.ico" />

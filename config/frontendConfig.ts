@@ -2,19 +2,22 @@ import Passwordless from 'supertokens-auth-react/recipe/passwordless';
 import EmailPassword from 'supertokens-auth-react/recipe/emailpassword';
 
 import Session from "supertokens-auth-react/recipe/session";
-import { appInfo } from './appInfo';
 import Router from 'next/router';
 import { PhoneVerifiedClaim } from '../claims/phoneVerifiedClaim';
+import { appInfo } from './appInfo';
 import axios from 'axios';
 import translactions from '../translations/translations';
+import { getLng } from '../utils/clientUtils';
+import en from '../translations/en/en';
 
-export let frontendConfig = () => {
+export const frontendConfig = () => {
+  let locale: string = getLng();
+
   return {
     appInfo,
     languageTranslations: {
       translations: translactions,
-      currentLanguageCookieScope: "patient.portal",
-      defaultLanguage: 'it'
+      defaultLanguage: locale,
     },
     recipeList: [
         Passwordless.init({
@@ -35,7 +38,7 @@ export let frontendConfig = () => {
               }
             `,
             signInUpFeature: {
-                defaultCountry: "EN",
+                defaultCountry: locale.toUpperCase(),
                 disableDefaultUI: false,
                 emailOrPhoneFormStyle: `
                     [data-supertokens~=button] {
@@ -98,20 +101,89 @@ export let frontendConfig = () => {
               }
               return undefined;
           },
+          style: `
+              [data-supertokens~="container"] {
+                  --palette-background: 51, 51, 51;
+                  --palette-inputBackground: 41, 41, 41;
+                  --palette-inputBorder: 41, 41, 41;
+                  --palette-textTitle: 255, 255, 255;
+                  --palette-textLabel: 255, 255, 255;
+                  --palette-textPrimary: 255, 255, 255;
+                  --palette-error: 173, 46, 46;
+                  --palette-textInput: 169, 169, 169;
+                  --palette-textLink: 169, 169, 169;
+                  --palette-superTokensBrandingBackground: 51, 51, 51;
+                  --palette-superTokensBrandingText: 51, 51, 51;
+              }
+          `,
+          resetPasswordUsingTokenFeature: {
+              disableDefaultUI: false,
+              enterEmailForm: {
+                style: `
+                    [data-supertokens~=button] {
+                        background-color: #555;
+                        color: inherit;
+                        border: 0px;
+                        width: 100%;
+                        margin: 0 auto;
+                    }
+
+                    [data-supertokens~=inputWrapper][data-supertokens~="inputWrapper"]:focus-within {
+                      border: 1px solid #555; 
+                      box-shadow: 0 0 0 0.2rem rgba(85, 85, 85, 0.25); 
+                    }
+                `,
+              },
+              submitNewPasswordForm: {
+                style: `
+                    [data-supertokens~=button] {
+                        background-color: #555;
+                        color: inherit;
+                        border: 0px;
+                        width: 100%;
+                        margin: 0 auto;
+                    }
+
+                    [data-supertokens~=inputWrapper][data-supertokens~="inputWrapper"]:focus-within {
+                      border: 1px solid #555; 
+                      box-shadow: 0 0 0 0.2rem rgba(85, 85, 85, 0.25); 
+                    }
+                `,
+              }
+          },
           signInAndUpFeature: {
+              disableDefaultUI: false,
+              signInForm: {
+                style: `
+                    [data-supertokens~=button] {
+                        background-color: #555;
+                        color: inherit;
+                        border: 0px;
+                        width: 100%;
+                        margin: 0 auto;
+                    }
+
+                    [data-supertokens~=inputWrapper][data-supertokens~="inputWrapper"]:focus-within {
+                      border: 1px solid #555; 
+                      box-shadow: 0 0 0 0.2rem rgba(85, 85, 85, 0.25); 
+                    }
+                `,
+              }, 
               signUpForm: {
-                  formFields: [
-                      {
-                          id: "email",
-                          label: "Email Address or Phone Number",
-                          placeholder: "Email Address or Phone NUmber",
-                          validate: async (value) => {
-                              // We can provide validation logic here.. but the backend
-                              // checks for a valid phone number anyway
-                              return undefined;
-                          },
-                      },
-                  ],
+                  style: `
+                      [data-supertokens~=button] {
+                          background-color: #555;
+                          color: inherit;
+                          border: 0px;
+                          width: 100%;
+                          margin: 0 auto;
+                      }
+
+                      [data-supertokens~=inputWrapper][data-supertokens~="inputWrapper"]:focus-within {
+                        border: 1px solid #555; 
+                        box-shadow: 0 0 0 0.2rem rgba(85, 85, 85, 0.25); 
+                      }
+                  `
               },
           },
         }),

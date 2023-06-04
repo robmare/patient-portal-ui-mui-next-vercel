@@ -1,16 +1,14 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import IconButton from '@mui/material/IconButton';
 import AddIcon from '@mui/icons-material/Add';
 import CloseIcon from '@mui/icons-material/Close';
-
-import FormGroup from '@mui/material/FormGroup';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import IconButton from '@mui/material/IconButton';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
+import * as React from 'react';
 import InsertPatientDataModal from "./InsertPatientDataModal";
-
 
 const style = {
   position: 'absolute',
@@ -23,7 +21,6 @@ const style = {
   overflowY: "scroll",
   boxShadow: 24,
   maxHeight: "90%",
-
   p: 4,
 };
 
@@ -36,26 +33,18 @@ export default function ChooseInsertPatientDataModal() {
     if (event.target.checked) {
       choosen.push(event.target.value);
     } else {
-      let index = choosen.indexOf(event.target.value);// --- get index by value - return value
-      choosen.splice(index, 1);// --- remove from array by index - return array
-    }
-    console.log(choosen);
+      let index = choosen.indexOf(event.target.value);
+      choosen.splice(index, 1);
+    };
   };
-  const callbackModal = () => {
-    console.log("ee");
 
-    // if (modal.target === "choose") {
-    //   setOpen(false);
-    // }
-
-  }
   const values = [
     {
       "choose": [
         {
           value: 'Iarterial_pressure',
           label: 'Arterial Pressure',
-          disabled: false,
+          disabled: true,
           required: false,
           defaultChecked: false
         },
@@ -69,21 +58,21 @@ export default function ChooseInsertPatientDataModal() {
         {
           value: 'Ibowel',
           label: 'Bowel',
-          disabled: false,
+          disabled: true,
           required: false,
           defaultChecked: false
         },
         {
           value: 'Idiuresis_vol_24h',
           label: 'Diuresis vol 24h',
-          disabled: false,
+          disabled: true,
           required: false,
           defaultChecked: false
         },
         {
           value: 'Idiuresis',
           label: 'Diuresis',
-          disabled: false,
+          disabled: true,
           required: false,
           defaultChecked: false
         },
@@ -125,37 +114,36 @@ export default function ChooseInsertPatientDataModal() {
         {
           value: 'Iweight',
           label: 'Weight',
-          disabled: false,
+          disabled: true,
           required: false,
           defaultChecked: false
         },
       ]
     },
   ];
-  console.log(values[0].choose);
   return (
-    <>
-
+    <div>
       <IconButton onClick={handleOpen}
         variant="outlined"
         size="large"
         edge="start"
         color="inherit"
-        aria-label="menu">
-        <AddIcon />
+        aria-label="menu"
+        sx={{ ml: 10 }}
+      >
+        <AddIcon color="#fff" />
       </IconButton>
-
       <Modal
         open={modal1}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-        target="choose">
-
+        target="choose"
+      >
         <Box sx={style}>
           <Box component="span"
             display="flex"
-            alignItems="center" sx={{ width: 1 }}>
+            sx={{ alignItems: "center", width: 1 }}>
             <Typography variant="h6" component="h2" display="inline" sx={{ width: 0.8 }}>Choose: </Typography>
             <Typography variant="body1" align="right" display="inline" sx={{ width: 0.3 }}>
               <IconButton onClick={handleClose}
@@ -165,23 +153,15 @@ export default function ChooseInsertPatientDataModal() {
                 <CloseIcon color="#fff" />
               </IconButton>
             </Typography>
-
           </Box>
           <FormGroup>
             {values[0].choose.map((data) => {
-              return <FormControlLabel control={<Checkbox defaultChecked={data.required} />} label={data.label} value={data.value} disabled={data.disabled} required={data.required} onChange={handleChange} />
+              return <FormControlLabel control={<Checkbox defaultChecked={data.required} />} key={data.label} label={data.label} value={data.value} disabled={data.disabled} required={data.required} onChange={handleChange} />
             })}
           </FormGroup>
-          <InsertPatientDataModal callbackModal={callbackModal} chooseDef={choosen} />
-          {/* <Button
-            variant="contained"
-
-            sx={{ width: 1, mt: 1 }}
-          >
-            Go
-          </Button> */}
+          <InsertPatientDataModal chooseDef={choosen} />
         </Box>
       </Modal>
-    </>
+    </div >
   );
 }

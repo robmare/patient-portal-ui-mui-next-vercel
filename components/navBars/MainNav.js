@@ -72,8 +72,6 @@ export default function MainNav () {
 
                     <Box sx={{ flexGrow: 1 }} />
                     
-                    <SelectLanguage />
-                    
                     <div
                         style={{
                             display: (loggedIn) ? 'flex' : 'none',
@@ -113,6 +111,8 @@ export default function MainNav () {
                             SIGN OUT
                         </div>
                     </div>
+
+                    <SelectLanguage />
                 </Toolbar>
             </AppBar>
         </Box>

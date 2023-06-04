@@ -28,8 +28,6 @@
     "**/*.tsx",
     "interfaces.d.ts",
     "pages/api/opt.js",
-    "pages/PatientAgenda.js",
-    "components/navBars/MainNav.js",
     "./src/**/*"
   ],
   "exclude": [
